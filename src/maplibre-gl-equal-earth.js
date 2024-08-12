@@ -36,3 +36,31 @@ export function mercLonLat_to_eqmercLonLat(ll) {
   const shifted = eq_to_LonLat(eq);
   return shifted;
 }
+
+// transformCameraUpdate handler class transforming between Equal Earth and Mercator tile coordinates
+export class EqualEarthCoordTransform {
+  constructor(map, zoomswitch) {
+    this._map = map;
+    this._zoomswitch = zoomswitch;
+    map.on('zoomstart', () => {
+      this._zoomstart = this._map.getZoom();
+    });
+    map.on('zoomend', () => {
+      this._zoomstart = this._map.getZoom();
+    });
+    map.transformCameraUpdate = this.cameraTransform.bind(this);
+  }
+
+  cameraTransform(next) {
+    if (this._zoomstart < this._zoomswitch && next.zoom >= this._zoomswitch) {
+      // console.log(`${this._zoomstart} -> ${next.zoom}`);
+      let ll = mercLonLat_to_eqmercLonLat([next.center.lng, next.center.lat]);
+      next.center = new LngLat(ll[0], ll[1]);
+    } else if (this._zoomstart >= this._zoomswitch && next.zoom < this._zoomswitch) {
+      // console.log(`${this._zoomstart} -> ${next.zoom}`);
+      let ll = geogLonLat_to_eqmercLonLat([next.center.lng, next.center.lat]);
+      next.center = new LngLat(ll[0], ll[1]);
+    }
+    return next;
+  }
+}
