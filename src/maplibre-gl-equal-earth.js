@@ -1,4 +1,6 @@
 import proj4 from 'proj4';
+import { LngLat } from 'maplibre-gl';
+
 
 // https://equal.bbox.earth/
 
