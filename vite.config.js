@@ -6,9 +6,8 @@ export default defineConfig({
     lib: {
       // Could also be a dictionary or array of multiple entry points
       entry: resolve(__dirname, 'lib/maplibre-gl-equal-earth.js'),
-      name: 'maplibre-gl-equal-earth',
-      // the proper extensions will be added
-      fileName: 'maplibre-gl-equal-earth',
+      name: 'maplibregleqearth',
+      fileName: format => { return format == 'es' ? 'maplibre-gl-equal-earth.js' : `maplibre-gl-equal-earth.${format}.js` }
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
@@ -18,6 +17,7 @@ export default defineConfig({
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {
+          'maplibre-gl': 'maplibregl'
         },
       },
     },
