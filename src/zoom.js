@@ -1,6 +1,6 @@
-import './style.css'
+import '../style.css'
 import { Map } from 'maplibre-gl';
-import { EqualEarthCoordTransform } from './lib/maplibre-gl-equal-earth.js';
+import { EqualEarthCoordTransform } from '../lib/maplibre-gl-equal-earth.js';
 
 var map = new Map({
   container: 'map',

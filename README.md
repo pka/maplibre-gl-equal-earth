@@ -26,11 +26,12 @@ var map = new Map({
 const transform = new EqualEarthCoordTransform(map, 3);
 ```
 
-Overlay GeoJSON data with DeckGL on Equal Earth base map:
+Overlay GeoJSON data with deck.gl on Equal Earth base map:
 
 ```
 import { Map } from 'maplibre-gl';
-import { MapboxOverlay, ScatterplotLayer } from 'deck.gl';
+import { MapboxOverlay } from '@deck.gl/mapbox';
+import { ScatterplotLayer } from '@deck.gl/layers';
 import { geogLonLat_to_eqmercLonLat } from 'maplibre-gl-equal-earth';
 
 var map = new Map({

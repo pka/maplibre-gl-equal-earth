@@ -26,7 +26,8 @@
   },
   "devDependencies": {
     "typescript": "^5.5.3",
-    "vite": "^5.4.1"
+    "vite": "^5.4.1",
+    "deck.gl": "^9.0.27"
   },
   "dependencies": {
     "proj4": "^2.11.0"
