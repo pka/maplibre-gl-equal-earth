@@ -1,8 +1,8 @@
 {
   "name": "maplibre-gl-equal-earth",
-  "version": "0.1.3",
+  "version": "0.2.0",
+  "type": "module",
   "description": "MapLibre GL JS plugin for basic Equal Earth projection support.",
-  "main": "dist/maplibre-gl-equal-earth.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pka/maplibre-gl-equal-earth.git"
@@ -18,10 +18,14 @@
   },
   "homepage": "https://github.com/pka/maplibre-gl-equal-earth#readme",
   "scripts": {
-    "minify:js": "terser src/maplibre-gl-equal-earth.js -o dist/maplibre-gl-equal-earth.js"
+    "dev": "vite",
+    "build": "vite build",
+    "tsbuild": "tsc && vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "terser": "^5.21.0"
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1"
   },
   "dependencies": {
     "proj4": "^2.11.0"
