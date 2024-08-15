@@ -64,13 +64,17 @@ export class EqualEarthCoordTransform {
   }
 
   cameraTransform(next) {
-    if (this._zoomstart < this._zoomswitch && next.zoom >= this._zoomswitch && next.center) {
+    if (this._zoomstart < this._zoomswitch && next.zoom >= this._zoomswitch) {
       let ll = mercLonLat_to_eqmercLonLat([next.center.lng, next.center.lat]);
-      next.center = new LngLat(ll[0], ll[1]);
+      if (!isNaN(ll[0]) && !isNaN(ll[1])) {
+        next.center = new LngLat(ll[0], ll[1]);
+      }
       // console.log(`${this._zoomstart} -> ${next.zoom}: `, next.center);
     } else if (this._zoomstart >= this._zoomswitch && next.zoom < this._zoomswitch) {
       let ll = geogLonLat_to_eqmercLonLat([next.center.lng, next.center.lat]);
-      next.center = new LngLat(ll[0], ll[1]);
+      if (!isNaN(ll[0]) && !isNaN(ll[1])) {
+        next.center = new LngLat(ll[0], ll[1]);
+      }
       // console.log(`${this._zoomstart} -> ${next.zoom}: `, next.center);
     }
     return next;
