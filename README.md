@@ -8,9 +8,25 @@ maplibre-gl-equal-earth is a MapLibre GL JS plugin for basic Equal Earth project
 npm install maplibre-gl-equal-earth
 ```
 
-## Example
+## Examples
 
-Overlay GeoJSON data with DeckGL on Equal Earth base map.
+Transforming between Equal Earth and Mercator tile coordinates for
+tileset with combined Equal Earth and Web Mercator coordinates:
+
+
+```
+import { Map } from 'maplibre-gl';
+import { EqualEarthCoordTransform } from 'maplibre-gl-equal-earth';
+
+var map = new Map({
+  container: 'map',
+  style: 'https://equal.bbox.earth/natural-earth-countries-style-eq2merc.json'
+});
+// Mercator tiles >= z3
+const transform = new EqualEarthCoordTransform(map, 3);
+```
+
+Overlay GeoJSON data with DeckGL on Equal Earth base map:
 
 ```
 import { Map } from 'maplibre-gl';
