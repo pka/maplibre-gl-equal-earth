@@ -1,6 +1,6 @@
 {
   "name": "maplibre-gl-equal-earth",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "MapLibre GL JS plugin for basic Equal Earth projection support.",
   "main": "dist/maplibre-gl-equal-earth.js",
   "repository": {

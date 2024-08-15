@@ -44,24 +44,34 @@ export class EqualEarthCoordTransform {
   constructor(map, zoomswitch) {
     this._map = map;
     this._zoomswitch = zoomswitch;
-    map.on('zoomstart', () => {
+    // We are effectively interested in zoomsart/zoomend, but zoom events seem always be combinded
+    // with move events and in case of a pinch zoom, we have to transform lat/lon until mooveend.
+    map.on('movestart', () => {
+      // console.log(`movestart ${this._map.getZoom()}`);
       this._zoomstart = this._map.getZoom();
     });
-    map.on('zoomend', () => {
+    map.on('moveend', () => {
+      // console.log(`moveend ${this._map.getZoom()}`);
       this._zoomstart = this._map.getZoom();
     });
+    // other flyTo events:
+    // for (const ev of ['zoomstart', 'zoomend', 'boxzoomstart', 'boxzoomend', 'pitchstart', 'pitchend', 'rotatestart', 'rotateend']) {
+    //   map.on(ev, (e) => {
+    //     console.log(`${ev} event: `, e);
+    //   });
+    // }
     map.transformCameraUpdate = this.cameraTransform.bind(this);
   }
 
   cameraTransform(next) {
-    if (this._zoomstart < this._zoomswitch && next.zoom >= this._zoomswitch) {
-      // console.log(`${this._zoomstart} -> ${next.zoom}`);
+    if (this._zoomstart < this._zoomswitch && next.zoom >= this._zoomswitch && next.center) {
       let ll = mercLonLat_to_eqmercLonLat([next.center.lng, next.center.lat]);
       next.center = new LngLat(ll[0], ll[1]);
+      // console.log(`${this._zoomstart} -> ${next.zoom}: `, next.center);
     } else if (this._zoomstart >= this._zoomswitch && next.zoom < this._zoomswitch) {
-      // console.log(`${this._zoomstart} -> ${next.zoom}`);
       let ll = geogLonLat_to_eqmercLonLat([next.center.lng, next.center.lat]);
       next.center = new LngLat(ll[0], ll[1]);
+      // console.log(`${this._zoomstart} -> ${next.zoom}: `, next.center);
     }
     return next;
   }
